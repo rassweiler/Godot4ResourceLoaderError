@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://b8utqv4y4de4"]
+
+[ext_resource type="Script" path="res://Main.gd" id="1_ylhvs"]
+[ext_resource type="PackedScene" uid="uid://boflrst1eo5oy" path="res://scene_manager.tscn" id="2_amxc3"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ylhvs")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 523.0
+offset_top = 264.0
+offset_right = 564.0
+offset_bottom = 295.0
+text = "Test"
+
+[node name="SceneManager" parent="." instance=ExtResource("2_amxc3")]
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

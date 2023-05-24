@@ -1,0 +1,44 @@
+[gd_scene load_steps=8 format=3 uid="uid://db1nn2dgtylsg"]
+
+[ext_resource type="Script" path="res://scene_with_instantiated.gd" id="1_ubbu2"]
+[ext_resource type="PackedScene" uid="uid://dl7g1tt04riky" path="res://instantiate_me.tscn" id="2_u0ui1"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ei4kv"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_1mxs6"]
+sky_material = SubResource("ProceduralSkyMaterial_ei4kv")
+
+[sub_resource type="Environment" id="Environment_pu2at"]
+background_mode = 2
+sky = SubResource("Sky_1mxs6")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_sb43q"]
+size = Vector3(5, 0.5, 6)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_7i3js"]
+points = PackedVector3Array(2.5, 0.25, 3, 2.5, -0.25, 3, 2.5, 0.25, -3, -2.5, 0.25, 3, -2.5, -0.25, 3, 2.5, -0.25, -3, -2.5, 0.25, -3, -2.5, -0.25, -3)
+
+[node name="SceneWithInstantiated" type="Node3D"]
+script = ExtResource("1_ubbu2")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_pu2at")
+
+[node name="InstantiateMe" parent="." instance=ExtResource("2_u0ui1")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("BoxMesh_sb43q")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_7i3js")
